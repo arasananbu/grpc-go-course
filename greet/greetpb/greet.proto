@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package greet;
+option go_package="greetpb";
+
+message Greeting {
+    string first_name = 1;
+    string last_name = 2;
+}
+
+message GreetRequest {
+    Greeting greeting = 1;
+}
+
+message GreetResponse {
+    string result = 1;
+}
+
+message GreetManyTimesRequest {
+    Greeting greeting = 1;
+}
+
+message GreetManyTimesResponse {
+    string result = 1;
+}
+
+message LongGreetRequest {
+    Greeting greeting = 1;
+}
+
+message LongGreetResponse {
+    string result = 1;
+}
+
+message GreetEveryoneRequest {
+    Greeting greeting = 1;
+}
+
+message GreetEveryoneResponse {
+    string result = 1;
+}
+
+message GreetWithDeadlineRequest {
+    Greeting greeting = 1;
+}
+
+message GreetWithDeadlineResponse {
+    string result = 1;
+}
+
+service GreetService{
+    //Unary
+    rpc Greet(GreetRequest) returns (GreetResponse) {};
+
+    // Server Streaming
+    rpc GreetManyTimes(GreetManyTimesRequest) returns (stream GreetManyTimesResponse) {}
+
+    // Client Streaming
+    rpc LongGreet(stream LongGreetRequest) returns (LongGreetResponse) {};
+
+    // BiDirectional Streaming
+    rpc GreetEveryone(stream GreetEveryoneRequest) returns (stream GreetEveryoneResponse) {};
+
+    // Unary with Deadline
+    rpc GreetWithDeadline(GreetWithDeadlineRequest) returns (GreetWithDeadlineResponse) {};
+
+}
+
+message SumRequest {
+    int64 digit_1 = 1;
+    int64 digit_2 = 2;
+}
+
+message SumResponse {
+    int64 result = 1;
+}
+
+message PNDRequest {
+    int64 digit_1 = 1;
+}
+
+message PNDResponse {
+    int64 result = 1;
+}
+
+message ComputeAverageRequest {
+    int64 digit_1 = 1;
+}
+
+message ComputeAverageResponse {
+    float result = 1;
+}
+
+message SquareRootRequest {
+    int32 number = 1;
+}
+
+message SquareRootResponse {
+    double result = 1;
+}
+
+service CalculatorService {
+    //Unary
+    rpc Sum(SumRequest) returns (SumResponse) {};
+
+    // Stream server 
+    rpc PrimeNumberDecompostion(PNDRequest) returns (stream PNDResponse) {};
+
+    // Stream Client
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
+
+    // Error Handling
+    // This RPC will throw an exception if the sent number is negative.
+    // The error being sent is of type INVALID_ARGUMENT
+    rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
+
+}
